@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "b5e2e3c0-5f1a-4e1c-8c1d-9b2e3f4c5d6a",
+		"name": "File Storage Service",
+		"description": "Collection for File Storage Microservice API endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser\",\n    \"email\": \"test@example.com\",\n    \"password\": \"Test123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"Test123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Files",
+			"item": [
+				{
+					"name": "Upload File",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "description",
+									"value": "Test file upload",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/files/upload",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "files", "upload"]
+						}
+					}
+				},
+				{
+					"name": "Download File",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/files/download/{{fileId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "files", "download", "{{fileId}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete File",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/files/{{fileId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "files", "{{fileId}}"]
+						}
+					}
+				},
+				{
+					"name": "Get File Metadata",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/files/metadata/{{fileId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "files", "metadata", "{{fileId}}"]
+						}
+					}
+				},
+				{
+					"name": "List User Files",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/files",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "files"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Permissions",
+			"item": [
+				{
+					"name": "Share File",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"{{targetUserId}}\",\n    \"permissions\": [\"Read\", \"Write\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/files/{{fileId}}/share",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "files", "{{fileId}}", "share"]
+						}
+					}
+				},
+				{
+					"name": "Update Permissions",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"{{targetUserId}}\",\n    \"permissions\": [\"Read\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/files/{{fileId}}/permissions",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "files", "{{fileId}}", "permissions"]
+						}
+					}
+				},
+				{
+					"name": "Remove Permissions",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/files/{{fileId}}/permissions/{{targetUserId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "files", "{{fileId}}", "permissions", "{{targetUserId}}"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "your_jwt_token_here",
+			"type": "string"
+		},
+		{
+			"key": "fileId",
+			"value": "file_id_here",
+			"type": "string"
+		},
+		{
+			"key": "targetUserId",
+			"value": "target_user_id_here",
+			"type": "string"
+		}
+	]
+} 
